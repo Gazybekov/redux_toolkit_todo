@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { deleteTodo, editTodo } from "../store/todoSlice";
+import { deleteItem, editItem } from "../store/todoSlice";
 import { useDispatch } from "react-redux";
 
 const TodoItem = ({ title, id }) => {
@@ -7,7 +7,7 @@ const TodoItem = ({ title, id }) => {
   const [newTitle, setNewTitle] = useState(title);
   const dispatch = useDispatch();
   const handleClickSave = () => {
-    dispatch(editTodo({ id, newTitle }));
+    dispatch(editItem({ id, newTitle }));
     setEditId(null);
   };
   return (
@@ -31,9 +31,7 @@ const TodoItem = ({ title, id }) => {
             </div>
           ) : (
             <div>
-              <button onClick={() => dispatch(deleteTodo({ id }))}>
-                delete
-              </button>
+              <button onClick={() => dispatch(deleteItem(id))}>delete</button>
               <button onClick={() => setEditId(id)}>Edit</button>
             </div>
           )}

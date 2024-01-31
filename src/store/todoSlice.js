@@ -16,18 +16,36 @@ export const deleteItem = createAsyncThunk(
     }
   }
 );
-export const addItem = createAsyncThunk("/todos/addItem", async (todoTitle) => {
-  try {
-    const newTodo = {
-      title: todoTitle,
-    };
-    const { data } = await axios.post(`${API}`, newTodo);
-    console.log(data);
-  } catch (error) {
-    console.log(error);
+export const addItem = createAsyncThunk(
+  "/todos/addItem",
+  async (todoTitle, { dispatch }) => {
+    try {
+      const newTodo = {
+        title: todoTitle,
+      };
+      const { data } = await axios.post(`${API}`, newTodo);
+      dispatch(getTodos());
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+    }
   }
-});
-
+);
+export const editItem = createAsyncThunk(
+  "/todos/editItem",
+  async ({ id, newTitle }, { dispatch }) => {
+    try {
+      const newEditedTodo = {
+        title: newTitle,
+      };
+      const { data } = await axios.patch(`${API}/${id}`, newEditedTodo);
+      dispatch(getTodos());
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+);
 const todoSlice = createSlice({
   name: "todo",
   initialState: {
