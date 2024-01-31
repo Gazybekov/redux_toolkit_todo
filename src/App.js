@@ -1,15 +1,20 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./index.css";
 import TodoUl from "./components/TodoList";
 import { useDispatch } from "react-redux";
-import { addTodo } from "./store/todoSlice";
+import { addItem, getTodos } from "./store/todoSlice";
 const App = () => {
   const [todoTitle, setTodoTitle] = useState("");
 
   const dispatch = useDispatch();
   const handleCLick = () => {
-    dispatch(addTodo({ todoTitle }));
+    dispatch(addItem(todoTitle));
+    setTodoTitle("");
   };
+
+  useEffect(() => {
+    dispatch(getTodos());
+  }, []);
 
   return (
     <div>
